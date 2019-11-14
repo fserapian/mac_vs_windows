@@ -21,12 +21,13 @@ public class MainActivity extends AppCompatActivity {
         EMPTY
     }
 
-    State[] gameState = {State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY};
+    private State[] gameState = {State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY, State.EMPTY};
 
-    int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
+    private int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
 
-    boolean gameOver = false;
-    boolean macsTurn = true;
+    private boolean gameOver = false;
+    private int roundsCount = 0;
+    private boolean macsTurn = true;
 
     public void fadeIn(View view) {
 
@@ -37,42 +38,49 @@ public class MainActivity extends AppCompatActivity {
         if (gameState[imageTag] == State.EMPTY && !gameOver) {
 
             if (macsTurn) { // Mac's turn
+                roundsCount++;
                 image.setImageResource(R.drawable.apple_logo);
-
                 gameState[imageTag] = State.MAC;
-
                 macsTurn = false;
 
             } else { // Windows' turn
+                roundsCount++;
                 image.setImageResource(R.drawable.windows_logo);
-
                 gameState[imageTag] = State.WINDOWS;
-
                 macsTurn = true;
             }
 
             // Fade in the image
             image.animate().alpha(1).setDuration(400);
 
-            for (int[] position : winningPositions) {
+            if (roundsCount == 9) {
+                gameOver("Draw!");
+            } else {
+                for (int[] position : winningPositions) {
 
-                if (gameState[position[0]] == gameState[position[1]] && gameState[position[1]] == gameState[position[2]] && gameState[position[0]] != State.EMPTY) {
+                    if (gameState[position[0]] == gameState[position[1]] && gameState[position[1]] == gameState[position[2]] && gameState[position[0]] != State.EMPTY) {
 
-                    gameOver = true;
-                    buttonPlayAgain.animate().alpha(1).setDuration(2000);
-
-                    // Determine the winner
-                    if (gameState[position[0]] == State.MAC) {
-
-                        textViewWinner.setText("Mac Wins!");
-                        textViewWinner.animate().alpha(1).setDuration(200);
-                    } else {
-                        textViewWinner.setText("Windows Wins!");
-                        textViewWinner.animate().alpha(1).setDuration(1000);
+                        // Determine the winner
+                        if (gameState[position[0]] == State.MAC) {
+                            gameOver("Mac Wins!");
+                        } else {
+                            gameOver("Windows Wins!");
+                        }
                     }
                 }
             }
         }
+    }
+
+    private void gameOver(String msg) {
+        gameOver = true;
+        // Enable the button
+        buttonPlayAgain.setEnabled(true);
+        // Fade in the button
+        buttonPlayAgain.animate().alpha(1).setDuration(3000);
+
+        textViewWinner.setText(msg);
+        textViewWinner.animate().alpha(1).setDuration(500);
     }
 
     public void playAgain(View view) {
@@ -80,16 +88,18 @@ public class MainActivity extends AppCompatActivity {
         textViewWinner.animate().alpha(0).setDuration(200);
         buttonPlayAgain.animate().alpha(0).setDuration(200);
 
-        for (int i = 0; i < gridLayout.getChildCount(); i++) {
+        for (int i = 0; i < gridLayout.getChildCount(); i++) { // Fade out all children
             ImageView image = (ImageView) gridLayout.getChildAt(i);
 
-            image.animate().alpha(0).setDuration(500); // Fade out all children
+            image.animate().alpha(0).setDuration(500);
         }
 
         for (int i = 0; i < gameState.length; i++) {
             gameState[i] = State.EMPTY;
         }
 
+        roundsCount = 0;
+        buttonPlayAgain.setEnabled(false);
         macsTurn = true;
         gameOver = false;
     }
@@ -99,12 +109,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Custom Title
-        setTitle("Mac vs Windows");
-
         // Retrieve the views
         textViewWinner = findViewById(R.id.textViewWinner);
         buttonPlayAgain = findViewById(R.id.buttonPlayAgain);
         gridLayout = findViewById(R.id.gridLayout);
+
+        // Disable the button
+        buttonPlayAgain.setEnabled(false);
+
+        // Custom Title
+        setTitle("Mac vs Windows");
     }
 }
