@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Tic Tac Toe</string>
+    <string name="player_x">Joueur X</string>
+    <string name="player_o">Joueur O</string>
+    <string name="two_players">Deux joueurs</string>
+    <string name="bonus_option">Mac vs Windows</string>
+    <string name="close">Fermer</string>
+    <string name="play">Jouer</string>
+    <string name="menu">Menu</string>
+    <string name="play_again">Rejouer</string>
+    <string name="reset">Reset</string>
+    <string name="setup">Setup</string>
+    <string name="about">À propos</string>
+    <string name="init_score">0</string>
+    <string name="image_view_desc">Play Space</string>
+    <string name="desc">Cette application est créée et maintenue\n par Fadi Serapian.\n\n\nTic Tac Toe © 2020\nTous les droits sont réservés.</string>
 </resources>

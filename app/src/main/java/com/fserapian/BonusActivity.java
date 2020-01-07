@@ -2,6 +2,7 @@ package com.fserapian;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,7 +10,7 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class BonusActivity extends AppCompatActivity {
 
     private TextView textViewWinner;
     private Button buttonPlayAgain;
@@ -53,18 +54,24 @@ public class MainActivity extends AppCompatActivity {
             // Fade in the image
             image.animate().alpha(1).setDuration(400);
 
-            if (roundsCount == 9) {
-                gameOver("Draw!");
+            if (roundsCount == 9
+                    && (gameState[0] != gameState[1] || gameState[1] != gameState[2])
+                    && (gameState[3] != gameState[4] || gameState[4] != gameState[5])
+                    && (gameState[6] != gameState[7] || gameState[7] != gameState[8])
+                    && (gameState[0] != gameState[3] || gameState[3] != gameState[6])
+                    && (gameState[1] != gameState[4] || gameState[4] != gameState[7])
+                    && (gameState[2] != gameState[5] || gameState[5] != gameState[8])
+                    && (gameState[0] != gameState[4] || gameState[4] != gameState[8])
+                    && (gameState[2] != gameState[4] || gameState[4] != gameState[6])) {
+                gameOver("Égalité !");
             } else {
-                for (int[] position : winningPositions) {
+                for (int[] winningPosition : winningPositions) {
 
-                    if (gameState[position[0]] == gameState[position[1]] && gameState[position[1]] == gameState[position[2]] && gameState[position[0]] != State.EMPTY) {
-
-                        // Determine the winner
-                        if (gameState[position[0]] == State.MAC) {
-                            gameOver("Mac Wins!");
+                    if (gameState[winningPosition[0]] == gameState[winningPosition[1]] && gameState[winningPosition[1]] == gameState[winningPosition[2]] && gameState[winningPosition[0]] != State.EMPTY) {
+                        if (!macsTurn) {
+                            gameOver("Mac gagne !");
                         } else {
-                            gameOver("Windows Wins!");
+                            gameOver("Windows gagne !");
                         }
                     }
                 }
@@ -104,10 +111,20 @@ public class MainActivity extends AppCompatActivity {
         gameOver = false;
     }
 
+    public void goToMenu(View view) {
+        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+        startActivity(intent);
+    }
+
+    public void goToSetup(View view) {
+        Intent intent = new Intent(getApplicationContext(), SetupActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bonus);
 
         // Retrieve the views
         textViewWinner = findViewById(R.id.textViewWinner);

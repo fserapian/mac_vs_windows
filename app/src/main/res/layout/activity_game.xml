@@ -5,8 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="visible"
-    tools:context=".MainActivity"
+    tools:context=".BonusActivity"
     tools:visibility="visible">
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutPlayerX"
+        android:layout_width="110dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="10dp"
+        app:helperText="Joueur X"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <TextView
+            android:id="@+id/lblScoreX"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/init_score"
+            android:textColor="#000"
+            android:textSize="30sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayoutPlayerO"
+        android:layout_width="110dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="22dp"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="2dp"
+        app:helperText="Joueur O"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inputLayoutPlayerX">
+
+
+        <TextView
+            android:id="@+id/lblScoreO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/init_score"
+            android:textColor="#000"
+            android:textSize="30sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <GridLayout
         android:id="@+id/gridLayout"
@@ -32,6 +78,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="10dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="0" />
 
@@ -42,6 +89,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="1" />
 
@@ -52,6 +100,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="2" />
 
@@ -62,6 +111,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="3" />
 
@@ -72,6 +122,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="4" />
 
@@ -82,6 +133,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="5" />
 
@@ -92,6 +144,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="25dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="6" />
 
@@ -102,6 +155,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="7" />
 
@@ -112,39 +166,63 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="25dp"
             android:alpha="0"
+            android:contentDescription="@string/image_view_desc"
             android:onClick="fadeIn"
             android:tag="8" />
     </GridLayout>
 
     <Button
-        android:id="@+id/buttonPlayAgain"
+        android:id="@+id/btnReset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="153dp"
-        android:layout_marginEnd="153dp"
-        android:layout_marginBottom="20dp"
-        android:width="120dp"
-        android:alpha="0"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:background="@android:color/background_dark"
         android:onClick="playAgain"
-        android:text="Play Again"
+        android:text="@string/reset"
         android:textColor="@android:color/background_light"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <TextView
-        android:id="@+id/textViewWinner"
+    <Button
+        android:id="@+id/btnMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="163dp"
-        android:layout_marginEnd="163dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/colorSecondary"
+        android:onClick="goToMenu"
+        android:text="@string/menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="OnClick" />
+
+    <TextView
+        android:id="@+id/lblWinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="80dp"
         android:alpha="0"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonPlayAgain"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="65dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/colorLayout"
+        android:onClick="goToSetup"
+        android:text="@string/setup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
